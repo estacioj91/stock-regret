@@ -7,8 +7,8 @@ import moment from "moment";
 // https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=IBM&interval=60min&apikey=UCHLLH0H979IWVEN
 
 const Datafetch = ({ length, stock, volume, ready }) => {
-	const [results, setResults] = useState([]);
-	const [dates, setDates] = useState([]);
+	const [results, setResults] = useState("");
+	const [dates, setDates] = useState("");
 	const [data, setData] = useState("");
 
 	const maxProfit = (arr) => {
@@ -36,17 +36,13 @@ const Datafetch = ({ length, stock, volume, ready }) => {
 		maxProfit = Number(maxProfit) * Number(volume);
 		resultsObj = { minDate, maxDate, minPrice, maxPrice, maxProfit, stock };
 		//return max profit and which dates
-
 		setData(resultsObj);
 	};
 
 	const getDates = () => {
-		console.log("in get Dates:Results:", results);
-		console.log(results);
 		const current = moment();
 		var resultDates = [];
 		if (!results) return;
-		if (results.length === 0) return;
 		while (length > 0) {
 			if (!results[current.format("YYYY-MM-DD")]) {
 				current.subtract(1, "day");
@@ -63,15 +59,22 @@ const Datafetch = ({ length, stock, volume, ready }) => {
 			.reverse();
 		setDates(selectedDates);
 		maxProfit(selectedDates);
-		console.log("end of get Dates");
 	};
 	// R287S1LX03F6ERCB
+	// https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=${stock}&interval=60min&apikey=PUO5FKYX4DDICCZH
 	const getData = async () => {
 		// GETS API DATA
-		console.log("in get data", stock);
-		var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=${stock}&interval=60min&apikey=UCHLLH0H979IWVEN`;
+		if (stock === undefined) return;
+		var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&outputsize=full&apikey=demo`;
 		var res = await axios.get(url).then((res) => {
+			if (
+				res.data["Information"] ===
+				"Thank you for using Alpha Vantage! Our standard API call frequency is 5 calls per minute and 500 calls per day. Please visit https://www.alphavantage.co/premium/ if you would like to target a higher API call frequency."
+			) {
+				alert(res.data["Information"]);
+			}
 			var response = res.data;
+			// var object = response["Time Series (Daily)"];
 			var object = response["Time Series (Daily)"];
 			// Test Data
 			// var object = response;
@@ -79,20 +82,26 @@ const Datafetch = ({ length, stock, volume, ready }) => {
 		}, console.error("max calls"));
 	};
 	useEffect(() => {
-		console.log("here useEffect Stock", stock);
-		getData();
-		getDates();
-		console.log("in useEffect from DataFetch", length, dates);
-	}, [ready]);
+		if (ready === false) return true;
+		console.log("results in hooks", results === "");
+		if (results == "") {
+			getData();
+		} else {
+			getDates();
+		}
+	}, [ready, results]);
 
 	return (
-		<div style={{ textAlign: "center" }}>
+		<div className="data-fetch" style={{ textAlign: "center" }}>
 			<h1>{data.stock}</h1>
-			<h4>Best Date to buy: {data.minDate} </h4>
-			<p>{data.minPrice}</p>
-			<h4>Best Date to sell: {data.maxDate}</h4>
-			<p>{data.maxPrice}</p>
-			<h3>{data.maxProfit}</h3>
+			<h3>Best Date to buy: </h3>
+			<p>{data.minDate}</p>
+			<p>{!data.minPrice || "price: $" + data.minPrice}</p>
+			<h3>Best Date to sell:</h3>
+			<p>{data.maxDate}</p>
+			<p>{!data.maxPrice || "price: $" + data.maxPrice}</p>
+			<h3>Max Profit: </h3>
+			<p>{data.maxProfit}</p>
 		</div>
 	);
 };

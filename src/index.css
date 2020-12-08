@@ -7,6 +7,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	color: white !important;
 	background-color: black !important;
+	font-family: "DM Sans", sans-serif !important;
 }
 
 code {
@@ -30,6 +31,11 @@ form {
 	width: 350px;
 	font-weight: 600;
 }
+.title {
+	color: rgb(0, 200, 5, 1) !important;
+	text-align: center;
+	font-weight: 600 !important;
+}
 .Button {
 	border: solid 1.5px rgb(0, 200, 5, 1) !important;
 	color: rgb(0, 200, 5, 1) !important;
@@ -41,10 +47,13 @@ form {
 	color: rgb(0, 200, 5, 1) !important;
 	flex-basis: 20%;
 	font-weight: 600 !important;
+	font-family: "DM Sans", sans-serif !important;
 }
 .submit-button {
 	border: solid 1.5px rgb(0, 200, 5, 1) !important;
 	color: rgb(0, 200, 5, 1) !important;
+	font-family: "DM Sans", sans-serif !important;
+	font-weight: 600 !important;
 }
 .share-button {
 	display: flex;
@@ -55,8 +64,18 @@ form {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	font-family: "DM Sans", sans-serif !important;
 }
 .input-wrap {
 	border: solid 3px rgb(0, 200, 5, 1) !important;
 	padding: 2em 2em;
+}
+.data-fetch {
+	margin: 0 auto;
+	width: 350px;
+	border: solid 3px rgb(0, 200, 5, 1) !important;
+	padding: 0 2em;
+}
+h3 {
+	font-weight: 600 !important;
 }

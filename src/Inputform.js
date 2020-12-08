@@ -20,21 +20,26 @@ const Inputform = ({
 	};
 	return (
 		<div>
+			<h2 className="title">STOCK REGRET</h2>
 			<form
 				className="input-wrap"
 				onSubmit={handleSubmit}
 				style={{ alignContent: "center" }}
 			>
 				<label>
-					Stock
-					<input
-						id="input-data"
-						type="text"
-						ref={stockEL}
-						onChange={() => {
-							console.log(stockEL.current.value);
-						}}
-					/>
+					<p>Stock</p>
+					<div>
+						<input
+							disabled
+							placeholder="IBM"
+							id="input-data"
+							type="text"
+							ref={stockEL}
+							onChange={() => {
+								console.log(stockEL.current.value);
+							}}
+						/>
+					</div>
 				</label>
 				<br />
 				<p>Length</p>
