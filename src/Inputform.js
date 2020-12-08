@@ -1,42 +1,52 @@
 import React from "react";
-
+import Datafetch from "./Datafetch";
+import { Button } from "react-bootstrap";
 const Inputform = ({
 	changeSingle,
 	changeLength,
 	changeStock,
 	changeVolume,
-	setReady,
 }) => {
 	const lengthEL = React.useRef(null);
 	const stockEL = React.useRef(null);
 	const volumeEL = React.useRef(null);
-	const [userVolume, setVolume] = React.useState(0);
-	const [userLength, setLength] = React.useState(0);
+	const [userVolume, setVolume] = React.useState(10);
+	const [userLength, setLength] = React.useState(7);
+	const [userStock, setStock] = React.useState();
+	const [userReady, setuserReady] = React.useState(false);
+	const stockRef = React.useRef("");
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		changeSingle({
-			length: userLength,
-			stock: "TSLA",
-			volume: userVolume,
-		});
 	};
 	return (
 		<div>
-			<form onSubmit={handleSubmit}>
+			<form
+				className="input-wrap"
+				onSubmit={handleSubmit}
+				style={{ alignContent: "center" }}
+			>
 				<label>
 					Stock
-					<input type="text" ref={stockEL} />
+					<input
+						id="input-data"
+						type="text"
+						ref={stockEL}
+						onChange={() => {
+							console.log(stockEL.current.value);
+						}}
+					/>
 				</label>
 				<br />
-				<label>
-					Length
-					<button
+				<p>Length</p>
+				<div className="length-button">
+					<Button
+						variant="outline-dark"
 						value="7"
 						name="length"
-						className="button-length active"
+						className="Button-length active"
 						onClick={(e) => {
 							var elements = document.getElementsByClassName(
-								"button-length"
+								"Button-length"
 							);
 							for (let i = 0; i < elements.length; i++) {
 								elements[i].className = elements[i].className.replace(
@@ -49,14 +59,15 @@ const Inputform = ({
 						}}
 					>
 						Week
-					</button>
-					<button
+					</Button>
+					<Button
+						variant="outline-dark"
 						value="30"
 						name="length"
-						className="button-length"
+						className="Button-length"
 						onClick={(e) => {
 							var elements = document.getElementsByClassName(
-								"button-length"
+								"Button-length"
 							);
 							for (let i = 0; i < elements.length; i++) {
 								elements[i].className = elements[i].className.replace(
@@ -69,14 +80,15 @@ const Inputform = ({
 						}}
 					>
 						Month
-					</button>
-					<button
+					</Button>
+					<Button
+						variant="outline-dark"
 						value="180"
 						name="length"
-						className="button-length"
+						className="Button-length"
 						onClick={(e) => {
 							var elements = document.getElementsByClassName(
-								"button-length"
+								"Button-length"
 							);
 							for (let i = 0; i < elements.length; i++) {
 								elements[i].className = elements[i].className.replace(
@@ -89,14 +101,15 @@ const Inputform = ({
 						}}
 					>
 						6 Month
-					</button>
-					<button
+					</Button>
+					<Button
+						variant="outline-dark"
 						value="365"
 						name="length"
-						className="button-length"
+						className="Button-length"
 						onClick={(e) => {
 							var elements = document.getElementsByClassName(
-								"button-length"
+								"Button-length"
 							);
 							for (let i = 0; i < elements.length; i++) {
 								elements[i].className = elements[i].className.replace(
@@ -109,17 +122,18 @@ const Inputform = ({
 						}}
 					>
 						Year
-					</button>
-				</label>
+					</Button>
+				</div>
 				<br />
-				<label>
-					Volume
-					<button
+				<p>Shares</p>
+				<div className="share-button">
+					<Button
+						variant="outline-dark"
 						value="10"
 						name="value"
-						className="button active"
+						className="Button active"
 						onClick={(e) => {
-							var elements = document.getElementsByClassName("button");
+							var elements = document.getElementsByClassName("Button");
 							for (let i = 0; i < elements.length; i++) {
 								elements[i].className = elements[i].className.replace(
 									" active",
@@ -131,14 +145,15 @@ const Inputform = ({
 						}}
 					>
 						10
-					</button>
-					<button
+					</Button>
+					<Button
+						variant="outline-dark"
 						type="radio"
 						value="100"
 						name="value"
-						className="button"
+						className="Button"
 						onClick={(e) => {
-							var elements = document.getElementsByClassName("button");
+							var elements = document.getElementsByClassName("Button");
 							for (let i = 0; i < elements.length; i++) {
 								elements[i].className = elements[i].className.replace(
 									" active",
@@ -150,14 +165,15 @@ const Inputform = ({
 						}}
 					>
 						100
-					</button>
-					<button
+					</Button>
+					<Button
+						variant="outline-dark"
 						type="radio"
 						value="1000"
 						name="value"
-						className="button"
+						className="Button"
 						onClick={(e) => {
-							var elements = document.getElementsByClassName("button");
+							var elements = document.getElementsByClassName("Button");
 							for (let i = 0; i < elements.length; i++) {
 								elements[i].className = elements[i].className.replace(
 									" active",
@@ -169,19 +185,32 @@ const Inputform = ({
 						}}
 					>
 						1000
-					</button>
-				</label>
+					</Button>
+				</div>
 				<br />
-				<button
+				<Button
+					className="submit-button"
+					variant="outline-dark"
+					style={{ width: "100%" }}
 					type="submit"
 					name="Submit"
 					onClick={() => {
-						setReady(true);
+						var inputStock = document.getElementById("input-data").value;
+						console.log("input stock", inputStock);
+						setStock(inputStock);
+						setuserReady(true);
 					}}
 				>
 					Submit
-				</button>
+				</Button>
 			</form>
+			{console.log("user volume", userVolume, userLength, userStock)}
+			<Datafetch
+				stock={userStock}
+				length={userLength}
+				volume={userVolume}
+				ready={userReady}
+			/>
 		</div>
 	);
 };

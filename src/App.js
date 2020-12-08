@@ -3,7 +3,7 @@ import Datafetch from "./Datafetch";
 import Inputform from "./Inputform";
 const App = () => {
 	const [singleState, setSingle] = useState({
-		length: 0,
+		length: 7,
 		stock: "IBM",
 		volume: "10",
 	});
@@ -12,14 +12,8 @@ const App = () => {
 		console.log("app useeffect", singleState, "ready", ready);
 	}, [ready]);
 	return (
-		<div>
+		<div className="app body-wrap">
 			<Inputform changeSingle={setSingle} setReady={setReady} />
-			<Datafetch
-				length={singleState.length}
-				stock={singleState.stock}
-				volume={singleState.volume}
-				ready={ready}
-			/>
 		</div>
 	);
 };

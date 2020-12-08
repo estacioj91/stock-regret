@@ -34,9 +34,9 @@ const Datafetch = ({ length, stock, volume, ready }) => {
 			}
 		});
 		maxProfit = Number(maxProfit) * Number(volume);
-		resultsObj = { minDate, maxDate, minPrice, maxPrice, maxProfit };
+		resultsObj = { minDate, maxDate, minPrice, maxPrice, maxProfit, stock };
 		//return max profit and which dates
-		console.log("profits", resultsObj);
+
 		setData(resultsObj);
 	};
 
@@ -69,7 +69,7 @@ const Datafetch = ({ length, stock, volume, ready }) => {
 	const getData = async () => {
 		// GETS API DATA
 		console.log("in get data", stock);
-		var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=${stock}&interval=60min&apikey=8RTQVH1OT3KIYYXY`;
+		var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=${stock}&interval=60min&apikey=UCHLLH0H979IWVEN`;
 		var res = await axios.get(url).then((res) => {
 			var response = res.data;
 			var object = response["Time Series (Daily)"];
@@ -79,13 +79,15 @@ const Datafetch = ({ length, stock, volume, ready }) => {
 		}, console.error("max calls"));
 	};
 	useEffect(() => {
+		console.log("here useEffect Stock", stock);
 		getData();
 		getDates();
 		console.log("in useEffect from DataFetch", length, dates);
 	}, [ready]);
 
 	return (
-		<div>
+		<div style={{ textAlign: "center" }}>
+			<h1>{data.stock}</h1>
 			<h4>Best Date to buy: {data.minDate} </h4>
 			<p>{data.minPrice}</p>
 			<h4>Best Date to sell: {data.maxDate}</h4>

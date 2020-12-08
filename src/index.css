@@ -5,12 +5,58 @@ body {
 		"Helvetica Neue", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	color: white !important;
+	background-color: black !important;
 }
 
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
 }
+
 .active {
 	color: green;
+}
+.app {
+	align-items: center;
+	align-content: center;
+}
+.body-wrap {
+	max-width: 1440px;
+	margin: auto;
+}
+form {
+	margin: 0 auto;
+	width: 350px;
+	font-weight: 600;
+}
+.Button {
+	border: solid 1.5px rgb(0, 200, 5, 1) !important;
+	color: rgb(0, 200, 5, 1) !important;
+	flex-basis: 32%;
+	font-weight: 600 !important;
+}
+.Button-length {
+	border: solid 1.5px rgb(0, 200, 5, 1) !important;
+	color: rgb(0, 200, 5, 1) !important;
+	flex-basis: 20%;
+	font-weight: 600 !important;
+}
+.submit-button {
+	border: solid 1.5px rgb(0, 200, 5, 1) !important;
+	color: rgb(0, 200, 5, 1) !important;
+}
+.share-button {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.length-button {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.input-wrap {
+	border: solid 3px rgb(0, 200, 5, 1) !important;
+	padding: 2em 2em;
 }
